@@ -1,47 +1,475 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Flux</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flux | The Student Money Ecosystem</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>💰 Flux</header>
+    <div class="ticker-wrap">
+        <div class="ticker">
+            🎉 Community Milestone: Students saved ₹12,50,000 this week on Flux! &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp; 🚀 New Reward: boAt Headphones added to store! &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp; 💡 Tip: Use code 'STUDENT20' for Amazon Prime. &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp; 🏆 Weekly Leaderboard Reset in 2 Days.
+        </div>
+    </div>
 
-<nav>
-  <button onclick="show('dashboard')">Dashboard</button>
-  <button onclick="show('expenses')">Expenses</button>
-  <button onclick="show('habits')">Habits</button>
-</nav>
+    <div id="landing-page">
+        <nav class="lp-nav">
+            <div class="logo-container">
+                <i class="fas fa-bolt logo-icon"></i>
+                <span class="logo-text">FLUX.</span>
+            </div>
+            <div class="nav-links">
+                <a onclick="document.getElementById('features').scrollIntoView()">Features</a>
+                <a onclick="openInfoModal('about')">Mission</a>
+                <a onclick="openInfoModal('contact')">Contact</a>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <button class="btn-glow" style="padding: 10px 25px; font-size: 0.9rem;" onclick="openAuth('signup')">Join Flux</button>
+                <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+            </div>
+        </nav>
 
-<div class="container">
+        <section class="hero">
+            <div class="hero-text fade-in">
+                <h1>Financial Freedom <br>Starts <span style="color: var(--primary);">Here.</span></h1>
+                <p>Flux is the intelligent financial OS for students. Budget smarter, save faster, and earn real rewards like Netflix & Spotify.</p>
+                
+                <div style="display: flex; gap: 20px;">
+                    <button class="btn-glow" onclick="openAuth('signup')">Join Flux</button>
+                    <button class="btn-outline" onclick="openReviews()">See User Reviews</button>
+                </div>
+            </div>
+            
+            <div class="hero-visual fade-in">
+                <div class="core-sphere"><i class="fas fa-user-graduate"></i></div>
+                <div class="orbit-ring-1"></div>
+                <div class="orbit-ring-2"></div>
+                <div class="planet p1"><i class="fas fa-money-bill-wave"></i></div>
+                <div class="planet p2"><i class="fas fa-chart-pie"></i></div>
+                <div class="planet p3"><i class="fas fa-gift"></i></div>
+            </div>
+        </section>
 
-  <div id="dashboard" class="card">
-    <h2>Dashboard</h2>
-    <p>Allowance (₹):</p>
-    <input type="number" id="allowance" placeholder="Monthly allowance" />
-    <button class="primary" onclick="setAllowance()">Set Allowance</button>
+        <div class="partners">
+            <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 25px; letter-spacing: 2px; font-weight: 700;">TRUSTED BY STUDENTS AT</p>
+            <div class="partner-icons">
+                <span><i class="fas fa-university"></i> IIT Bombay</span>
+                <span><i class="fas fa-graduation-cap"></i> Delhi University</span>
+                <span><i class="fas fa-school"></i> VIT Vellore</span>
+                <span><i class="fas fa-building-columns"></i> Manipal</span>
+                <span><i class="fas fa-laptop-code"></i> IIIT Hyderabad</span>
+            </div>
+        </div>
 
-    <p class="points">Points: <span id="points">0</span></p>
-    <p id="status"></p>
-  </div>
+        <section id="features" class="features reveal">
+            <div class="section-header">
+                <h2 style="color: var(--text-main); font-size: 2.8rem;">Everything you need.</h2>
+                <p style="color: var(--text-muted);">Built specifically for hostel life.</p>
+            </div>
+            <div class="grid-3">
+                <div class="feature-card">
+                    <i class="fas fa-wallet"></i>
+                    <h3>Smart Ledger</h3>
+                    <p>Automated expense tracking with visual breakdowns. Know exactly how much you spent on canteen food vs books.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>Gamified Rewards</h3>
+                    <p>Earn Points for every rupee saved. Climb the leaderboard and redeem points for real-world subscriptions.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-brain"></i>
+                    <h3>AI Fin-Buddy</h3>
+                    <p>Financial therapy to manage stress and anxiety. Get personalized tips to extend your monthly allowance.</p>
+                </div>
+            </div>
+        </section>
 
-  <div id="expenses" class="card hidden">
-    <h2>Add Expense</h2>
-    <input type="number" id="amount" placeholder="Amount" />
-    <button class="primary" onclick="addExpense()">Add</button>
-    <ul id="expenseList"></ul>
-  </div>
+        <section class="faq-section reveal">
+            <h2 style="text-align: center; color: var(--text-main); margin-bottom: 50px; font-size: 2.5rem;">Frequently Asked Questions</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="faq-item" onclick="this.classList.toggle('active')">
+                    <h4>Is my financial data safe? <i class="fas fa-chevron-down"></i></h4>
+                    <p>Absolutely. Security is our top priority. In this specific version of Flux, we utilize a "Local-First" architecture. This means all your financial data—transactions, budget limits, and savings history—is stored entirely on your own device's browser storage (LocalStorage). We do not transmit, store, or sell your private financial data to any external servers or third parties. You have complete control over your data. If you clear your browser cache, your data is wiped.</p>
+                </div>
+                <div class="faq-item" onclick="this.classList.toggle('active')">
+                    <h4>How do I earn points? <i class="fas fa-chevron-down"></i></h4>
+                    <p>Earning points on Flux is designed to be engaging and rewarding. You can accumulate points through several methods: 1) <strong>Consistency:</strong> Logging your expenses daily grants a streak bonus. 2) <strong>Savings:</strong> For every rupee you save (Income minus Expenses), you earn points. 3) <strong>Learning:</strong> Completing financial literacy modules in our Academy section rewards you with Points. 4) <strong>Challenges:</strong> Participating in weekly challenges like "No Spend Days" offers massive point boosts.</p>
+                </div>
+                <div class="faq-item" onclick="this.classList.toggle('active')">
+                    <h4>Are the rewards real? <i class="fas fa-chevron-down"></i></h4>
+                    <p>In a fully deployed production environment, yes! Flux partners with top student-friendly brands like Spotify, Netflix, Amazon, and Zomato to provide real, redeemable gift codes. In this demonstration version, we simulate the entire redemption process to show you exactly how the gamification loop incentivizes better financial habits.</p>
+                </div>
+            </div>
+        </section>
 
-  <div id="habits" class="card hidden">
-    <h2>Habits</h2>
-    <label><input type="checkbox" onchange="habit(this)"> Slept early</label><br>
-    <label><input type="checkbox" onchange="habit(this)"> Ate mess food</label>
-  </div>
+        <footer class="lp-footer">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo-container">
+                        <i class="fas fa-bolt logo-icon" style="font-size: 1.5rem;"></i>
+                        <span class="logo-text" style="font-size: 1.5rem;">FLUX.</span>
+                    </div>
+                    <p style="margin-top: 20px;">The #1 Finance App for Students. Empowering the next generation of investors.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Platform</h4>
+                    <a onclick="openInfoModal('features')">Features</a>
+                    <a onclick="openInfoModal('contact')">Help Center</a>
+                    <a onclick="openInfoModal('security')">Security</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Community</h4>
+                    <a onclick="openInfoModal('discord')">Discord Server</a>
+                    <a onclick="openInfoModal('blog')">Student Blog</a>
+                    <a onclick="openReviews()">Reviews</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a onclick="openInfoModal('privacy')">Privacy Policy</a>
+                    <a onclick="openInfoModal('terms')">Terms & Conditions</a>
+                    <a onclick="openInfoModal('cookie')">Cookie Policy</a>
+                </div>
+            </div>
+            
+            <div class="disclaimer-box">
+                Flux is an educational tool for tracking expenses and building saving habits. It does not provide financial or investment advice, and all decisions remain the user’s responsibility.
+            </div>
 
-</div>
+            <div style="text-align: center; border-top: 1px solid var(--border); padding-top: 30px; margin-top: 30px;">
+                &copy; 2026 Flux Technologies. All rights reserved. Made by AI.
+            </div>
+        </footer>
+    </div>
 
-<script src="script.js"></script>
+    <div id="app-container">
+        <nav class="sidebar">
+            <div class="logo-container" style="margin-bottom: 40px;">
+                <i class="fas fa-bolt logo-icon"></i>
+                <span class="logo-text">FLUX.</span>
+            </div>
+            
+            <div class="level-container">
+                <div class="level-text"><span>Level <span id="user-level">1</span> Saver</span><span><span id="user-xp">0</span> / 1000 XP</span></div>
+                <div class="level-bar"><div class="level-fill" id="level-fill" style="width: 0%;"></div></div>
+            </div>
+
+            <div class="nav-btn active" id="btn-dashboard" onclick="nav('dashboard')"><i class="fas fa-chart-pie"></i> <span>Dashboard</span></div>
+            <div class="nav-btn" id="btn-quests" onclick="nav('quests')"><i class="fas fa-scroll"></i> <span>Quests</span></div>
+            <div class="nav-btn" id="btn-rewards" onclick="nav('rewards')"><i class="fas fa-gift"></i> <span>Rewards</span></div>
+            <div class="nav-btn" id="btn-knowledge" onclick="nav('knowledge')"><i class="fas fa-book"></i> <span>Academy</span></div>
+            <div class="nav-btn" id="btn-leaderboard" onclick="nav('leaderboard')"><i class="fas fa-trophy"></i> <span>Rankings</span></div>
+            
+            <div style="margin-top: auto; border-top: 1px solid var(--border); padding-top: 30px;">
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 25px; cursor: pointer;" onclick="openSettings()">
+                    <div style="width: 45px; height: 45px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; color: white;" id="user-avatar">U</div>
+                    <div>
+                        <div id="u-name" style="font-weight: 700; color: var(--text-main); font-size: 1.1rem;">User</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">View Profile</div>
+                    </div>
+                </div>
+                <button onclick="logout()" style="width: 100%; padding: 14px; background: transparent; border: 1px solid var(--danger); color: var(--danger); border-radius: 12px; cursor: pointer; transition: 0.3s; font-weight: 600;">Logout</button>
+            </div>
+        </nav>
+
+        <div class="main-content">
+            <div id="dashboard" class="section active">
+                <header style="margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h1 style="font-size: 2.8rem; color: var(--text-main); margin-bottom: 5px;">Financial Overview</h1>
+                        <p style="color: var(--text-muted);">Welcome back. Here is your financial health report.</p>
+                    </div>
+                    <div style="background: rgba(255, 107, 107, 0.1); color: #ff6b6b; padding: 10px 20px; border-radius: 20px; font-weight: bold; display: flex; align-items: center; gap: 10px; border: 1px solid rgba(255, 107, 107, 0.3);">
+                        <i class="fas fa-fire"></i> <span id="streak-disp">0 Day Streak!</span>
+                    </div>
+                </header>
+                
+                <div id="burn-alert" class="burn-alert">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        <strong>High Burn Rate Detected!</strong><br>
+                        You are spending ₹<span id="burn-amt">0</span>/day. At this rate, you will run out of funds in 5 days.
+                    </div>
+                </div>
+
+                <div class="stat-grid">
+                    <div style="display: flex; flex-direction: column; gap: 30px;">
+                        <div class="glass-card" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(0,0,0,0));">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <div>
+                                    <h3 style="margin-bottom: 5px; color: var(--text-muted); font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">Total Balance</h3>
+                                    <div style="font-size: 4.5rem; font-weight: 800; margin: 5px 0; color: var(--text-main);">₹<span id="main-balance">0</span></div>
+                                    <div style="background: rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 8px; display: inline-block; font-size: 0.9rem; color: var(--text-main);">
+                                        <i class="fas fa-lock" style="color: var(--warning);"></i> 
+                                        Safe Limit: <strong style="color: var(--warning);">₹<span id="safe-limit">0</span></strong> <span style="font-size:0.8rem; opacity:0.7;">(40% of Income)</span>
+                                    </div>
+                                </div>
+                                <button class="btn-mini" onclick="openAddMoney()"><i class="fas fa-plus"></i> Add Funds</button>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <span style="background: rgba(6, 182, 212, 0.2); color: var(--cyan); padding: 6px 18px; border-radius: 20px; font-weight: 700; font-size: 0.9rem;">💎 <span id="pts">0</span> Points</span>
+                            </div>
+                        </div>
+
+                        <div class="glass-card">
+                            <div class="chart-header">
+                                <h3 style="color: var(--text-main);">Spend Analysis</h3>
+                                <div class="time-filters">
+                                    <button class="filter-btn" onclick="updateTimeRange('daily', this)">Daily</button>
+                                    <button class="filter-btn active" onclick="updateTimeRange('weekly', this)">Weekly</button>
+                                    <button class="filter-btn" onclick="updateTimeRange('monthly', this)">Monthly</button>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center;">
+                                <div style="height: 250px;"><canvas id="lineChart"></canvas></div>
+                                <div style="height: 250px;"><canvas id="pieChart"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 30px;">
+                        <div class="glass-card">
+                            <h3 style="color: var(--text-main); margin-bottom: 20px;">Quick Log</h3>
+                            <div style="display: flex; flex-direction: column; gap: 15px;">
+                                <div style="display: flex; gap: 10px;">
+                                    <select id="tx-type" style="width: 40%;"><option value="expense">Expense (-)</option><option value="income">Income (+)</option></select>
+                                    <input type="text" id="ex-desc" placeholder="What did you buy?">
+                                </div>
+                                <div style="display: flex; gap: 10px;">
+                                    <select id="ex-cat" style="width: 40%;"><option value="Food">Food</option><option value="Transport">Travel</option><option value="Fun">Fun</option><option value="Bills">Bills</option><option value="Education">Education</option><option value="Shopping">Shopping</option><option value="Other">Other</option></select>
+                                    <input type="number" id="ex-amt" placeholder="Amount (₹)">
+                                </div>
+                                <button class="btn-glow" style="width: 100%; border-radius: 12px; margin-top: 10px;" onclick="addEx()">Track Transaction</button>
+                            </div>
+                        </div>
+
+                        <div class="glass-card" style="flex: 1; display: flex; flex-direction: column;">
+                            <h3 style="color: var(--text-main);">Recent History</h3>
+                            <div id="tx-history" class="tx-list" style="margin-top: 20px; flex: 1;">
+                                <p style="color: var(--text-muted); text-align: center; margin-top: 40px;">No transactions found.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="quests" class="section">
+                <header style="margin-bottom: 40px; text-align: center;">
+                    <h1 style="font-size: 3rem; color: var(--text-main);">Daily Quests</h1>
+                    <p style="color: var(--text-muted);">Complete tasks to level up and earn rewards.</p>
+                </header>
+                
+                <div class="glass-card" style="display: flex; align-items: center; justify-content: space-between; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(0,0,0,0)); border-color: var(--success);">
+                    <div>
+                        <h2 style="color: var(--text-main); margin-bottom: 5px;">Daily Check-In</h2>
+                        <p style="color: var(--text-muted);">Log in every day to keep your streak alive.</p>
+                    </div>
+                    <button class="btn-glow" id="checkin-btn" onclick="handleCheckIn()">Claim +50 XP</button>
+                </div>
+
+                <div class="quest-grid">
+                    <div class="quest-card" id="task-insta" onclick="completeTask('insta', 100)">
+                        <div class="quest-icon"><i class="fab fa-instagram"></i></div>
+                        <div><h3 style="color: var(--text-main);">Link Instagram</h3><p style="color: var(--text-muted); font-size: 0.9rem;">Share your progress.</p></div>
+                        <i class="fas fa-check-circle quest-check"></i>
+                    </div>
+                    <div class="quest-card" id="task-discord" onclick="completeTask('discord', 100)">
+                        <div class="quest-icon"><i class="fab fa-discord"></i></div>
+                        <div><h3 style="color: var(--text-main);">Join Discord</h3><p style="color: var(--text-muted); font-size: 0.9rem;">Meet other students.</p></div>
+                        <i class="fas fa-check-circle quest-check"></i>
+                    </div>
+                    <div class="quest-card" id="task-profile" onclick="completeTask('profile', 50)">
+                        <div class="quest-icon"><i class="fas fa-user-edit"></i></div>
+                        <div><h3 style="color: var(--text-main);">Complete Profile</h3><p style="color: var(--text-muted); font-size: 0.9rem;">Add your details.</p></div>
+                        <i class="fas fa-check-circle quest-check"></i>
+                    </div>
+                    <div class="quest-card" id="task-verify" onclick="completeTask('verify', 200)">
+                        <div class="quest-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div><h3 style="color: var(--text-main);">Verify Student ID</h3><p style="color: var(--text-muted); font-size: 0.9rem;">Get exclusive perks.</p></div>
+                        <i class="fas fa-check-circle quest-check"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div id="rewards" class="section">
+                <header style="margin-bottom: 50px; text-align: center;">
+                    <h1 style="font-size: 3rem; color: var(--text-main);">Student Rewards</h1>
+                    <p style="color: var(--text-muted);">Redeem your hard-earned points for premium subscriptions.</p>
+                </header>
+                <div class="rewards-grid" id="rewards-grid"></div>
+            </div>
+
+            <div id="knowledge" class="section">
+                <header style="margin-bottom: 40px;">
+                    <h1 style="font-size: 2.8rem; color: var(--text-main);">Financial Academy</h1>
+                    <div class="academy-banner">🚀 Weekly Drop: "How to File Taxes as a Student" added this week!</div>
+                </header>
+                <div class="academy-grid" id="academy-grid"></div>
+            </div>
+
+            <div id="leaderboard" class="section">
+                <header style="margin-bottom: 30px;"><h1 style="font-size: 2.8rem; color: var(--text-main);">Rankings</h1></header>
+                <div class="rank-tabs">
+                    <button class="rank-tab active" onclick="switchRank('Global', this)">Global</button>
+                    <button class="rank-tab" onclick="switchRank('Weekly', this)">Weekly</button>
+                    <button class="rank-tab" onclick="switchRank('Uni', this)">University</button>
+                </div>
+                <div class="glass-card" style="padding: 0; overflow: hidden;">
+                    <table class="rank-table">
+                        <thead><tr><th style="padding-left: 40px;">Rank</th><th>Student</th><th>University</th><th>Points</th><th>Streak</th></tr></thead>
+                        <tbody id="rank-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="fab chat-trigger" onclick="toggleChat()"><i class="fas fa-robot"></i></div>
+    <div class="chat-win" id="chat-win">
+        <div style="padding: 20px; background: var(--bg-deep); border-bottom: 1px solid var(--border); color: var(--text-main); font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
+            <span><i class="fas fa-bolt" style="color: var(--primary);"></i> Flux Advisor</span>
+            <span onclick="toggleChat()" style="cursor:pointer; font-size: 1.2rem;">&times;</span>
+        </div>
+        <div id="chat-content" style="flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px;">
+            <div style="background: rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; align-self: flex-start; max-width: 85%; font-size: 0.95rem; line-height: 1.5; color: var(--text-main);">
+                Hello! I'm your financial therapist. Feeling stressed about money? Or looking for investment tips?
+            </div>
+        </div>
+        <div style="padding: 15px; border-top: 1px solid var(--border); display: flex; gap: 10px; background: var(--bg-deep);">
+            <input type="text" id="chat-input" placeholder="Ask me anything..." style="margin: 0; color: white; background: transparent; border: none; flex: 1;" onkeypress="if(event.key==='Enter') sendChat()">
+            <button class="btn-glow" style="padding: 5px 15px; font-size: 0.9rem;" onclick="sendChat()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <div id="auth-overlay" class="modal-overlay">
+        <div class="modal-box" style="text-align: center;">
+            <span class="modal-close" onclick="closeAuth()">&times;</span>
+            <div id="login-form">
+                <h2 style="margin-bottom: 10px; font-size: 2.2rem; color: var(--text-main);">Welcome Back</h2>
+                <p style="color: var(--text-muted); margin-bottom: 30px;">Access your financial dashboard</p>
+                <input type="text" id="l-user" placeholder="Username">
+                <input type="password" id="l-pass" placeholder="Password">
+                <button class="btn-glow" style="width: 100%; margin-bottom: 20px;" onclick="handleLogin()">Login to Flux</button>
+                <div style="font-size: 0.9rem; cursor: pointer; color: var(--text-muted);" onclick="toggleAuthMode()">New here? <span style="color: var(--primary); font-weight: bold;">Sign Up</span></div>
+            </div>
+            <div id="signup-form" style="display: none;">
+                <h2 style="margin-bottom: 10px; font-size: 2.2rem; color: var(--text-main);">Create Account</h2>
+                <p style="color: var(--text-muted); margin-bottom: 30px;">Join 50,000+ students saving today</p>
+                <input type="text" id="s-user" placeholder="Choose Username">
+                <input type="password" id="s-pass" placeholder="Choose Password">
+                <input type="text" id="s-uni" placeholder="University Name">
+                <button class="btn-glow" style="width: 100%; margin-bottom: 20px;" onclick="handleSignup()">Create Account</button>
+                <div style="font-size: 0.9rem; cursor: pointer; color: var(--text-muted);" onclick="toggleAuthMode()">Already a member? <span style="color: var(--primary); font-weight: bold;">Login</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="reviews-overlay" class="modal-overlay">
+        <div class="modal-box">
+            <span class="modal-close" onclick="closeReviews()">&times;</span>
+            <h2 style="margin-bottom: 25px; font-size: 1.8rem; color: var(--text-main);">Real Student Stories</h2>
+            <div style="max-height: 450px; overflow-y: auto; padding-right: 10px;">
+                <div class="review-card">
+                    <div style="color: #fbbf24; margin-bottom: 8px;">⭐⭐⭐⭐⭐</div>
+                    <p style="color: var(--text-main);">"Flux saved my wallet! I finally stopped ordering food every night. The gamification makes saving addictive."</p>
+                    <div style="margin-top: 12px; font-size: 0.85rem; color: var(--primary); font-weight: 700;">- Rahul, IIT Bombay</div>
+                </div>
+                <div class="review-card">
+                    <div style="color: #fbbf24; margin-bottom: 8px;">⭐⭐⭐⭐⭐</div>
+                    <p style="color: var(--text-main);">"The AI chat is actually super helpful for financial stress. It's like a therapist for my wallet."</p>
+                    <div style="margin-top: 12px; font-size: 0.85rem; color: var(--primary); font-weight: 700;">- Sneha, Delhi University</div>
+                </div>
+                <div class="review-card">
+                    <div style="color: #fbbf24; margin-bottom: 8px;">⭐⭐⭐⭐</div>
+                    <p style="color: var(--text-main);">"Just redeemed my first Spotify code. Legit app. The Academy section taught me basics of investing."</p>
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted);">- Arjun, VIT</div>
+                </div>
+                <div class="review-card">
+                    <div style="color: #fbbf24; margin-bottom: 8px;">⭐⭐⭐⭐⭐</div>
+                    <p style="color: var(--text-main);">"I never thought I'd say this, but saving money is actually fun now. The university battles are super competitive!"</p>
+                    <div style="margin-top: 12px; font-size: 0.85rem; color: var(--text-muted);">- Priya, Manipal</div>
+                </div>
+                <div class="review-card">
+                    <div style="color: #fbbf24; margin-bottom: 8px;">⭐⭐⭐⭐⭐</div>
+                    <p style="color: var(--text-main);">"The Academy section taught me more about money in 10 mins than school did in 10 years."</p>
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted);">- Dev, SRCC</div>
+                </div>
+                <div class="review-card">
+                    <div style="color: #fbbf24; margin-bottom: 8px;">⭐⭐⭐⭐⭐</div>
+                    <p style="color: var(--text-main);">"My burn rate was crazy high until Flux alerted me. Saved me from being broke by month-end."</p>
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted);">- Ananya, BITS Pilani</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="course-overlay" class="modal-overlay">
+        <div class="modal-box">
+            <span class="modal-close" onclick="closeCourse()">&times;</span>
+            <h2 id="course-title" style="margin-bottom: 20px; color: var(--primary);">Course Title</h2>
+            <div id="course-content" style="color: var(--text-muted); line-height: 1.6; font-size: 1rem;">
+                </div>
+            <div class="course-nav">
+                <button class="btn-outline" id="btn-prev" onclick="prevPage()">Previous</button>
+                <span id="page-indicator">Page 1 of 4</span>
+                <button class="btn-glow" id="btn-next" onclick="nextPage()">Next</button>
+                <button class="btn-glow" id="btn-complete" onclick="finishCourse()" style="display:none; background: var(--success); border: none;">Claim Points</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="settings-overlay" class="modal-overlay">
+        <div class="modal-box">
+            <span class="modal-close" onclick="closeSettings()">&times;</span>
+            <h2 style="margin-bottom: 20px; color: var(--text-main);">Account Settings</h2>
+            <input type="text" id="set-name" placeholder="Full Name">
+            <input type="email" id="set-email" placeholder="Email Address">
+            <input type="tel" id="set-phone" placeholder="Phone Number">
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 10px;">Select Avatar:</p>
+            <div style="display: flex; gap: 10px; margin-bottom: 20px; font-size: 1.5rem;">
+                <span style="cursor:pointer;" onclick="selectAvatar('👨‍🎓')">👨‍🎓</span>
+                <span style="cursor:pointer;" onclick="selectAvatar('👩‍🎓')">👩‍🎓</span>
+                <span style="cursor:pointer;" onclick="selectAvatar('🦸‍♂️')">🦸‍♂️</span>
+                <span style="cursor:pointer;" onclick="selectAvatar('🦹‍♀️')">🦹‍♀️</span>
+                <span style="cursor:pointer;" onclick="selectAvatar('🤖')">🤖</span>
+            </div>
+            <button class="btn-glow" style="width: 100%;" onclick="saveSettings()">Save Changes</button>
+        </div>
+    </div>
+
+    <div id="info-overlay" class="modal-overlay">
+        <div class="modal-box">
+            <span class="modal-close" onclick="closeInfo()">&times;</span>
+            <h2 id="info-title" style="margin-bottom: 25px; color: var(--primary); font-size: 1.8rem;">Title</h2>
+            <div id="info-content" style="color: var(--text-muted); line-height: 1.7; font-size: 1rem;">Content</div>
+        </div>
+    </div>
+
+    <div id="add-money-overlay" class="modal-overlay">
+        <div class="modal-box" style="width: 400px; text-align: center;">
+            <span class="modal-close" onclick="closeAddMoney()">&times;</span>
+            <h2 style="margin-bottom: 20px; color: var(--text-main);">Add Funds</h2>
+            <p style="color: var(--text-muted); margin-bottom: 25px;">Top up your current balance.</p>
+            <input type="number" id="add-amt" placeholder="Enter Amount (₹)" style="text-align: center; font-size: 1.2rem;">
+            <button class="btn-glow" style="width: 100%; margin-top: 15px;" onclick="confirmAddMoney()">Add to Balance</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

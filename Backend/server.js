@@ -5,65 +5,128 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-/*
-  users = {
-    userId: {
-      allowance: number,
-      spent: number
-    }
-  }
-*/
+/**
+ * In-memory DB (MVP)
+ */
 const users = {};
 
-// Set allowance for a user
-app.post("/allowance", (req, res) => {
-  const { userId, allowance } = req.body;
+/* ---------- AI LOGIC ---------- */
 
-  if (!userId || !allowance) {
-    return res.status(400).json({ message: "userId and allowance required" });
+function generateAIReply(user, message = "") {
+  const text = message.toLowerCase();
+  const savedPercent =
+    ((user.allowance - user.spent) / user.allowance) * 100;
+
+  // Message-aware replies
+  if (text.includes("stress") || text.includes("tension")) {
+    return "🧠 It’s okay to feel stressed. Small consistent savings reduce pressure. You’re doing fine.";
+  }
+
+  if (text.includes("save")) {
+    return "💡 Try tracking even small expenses. That habit improves savings quickly.";
+  }
+
+  if (text.includes("spent") || text.includes("expense")) {
+    return "📊 Reviewing expenses before sleeping helps control spending.";
+  }
+
+  // Finance-based logic
+  if (savedPercent >= 70) {
+    return "🔥 Amazing discipline! You’re saving over 70% of your allowance. Keep this streak alive.";
+  }
+
+  if (savedPercent >= 60) {
+    return "💪 Good job! You’re meeting the 60% savings goal. Stay consistent.";
+  }
+
+  if (savedPercent >= 40) {
+    return "⚠️ You’re close to your safe limit. Be mindful with discretionary spending.";
+  }
+
+  return "🚨 High spending detected. Pause unnecessary expenses today.";
+}
+
+/* ---------- AUTH ---------- */
+
+app.post("/api/signup", (req, res) => {
+  const { userId, name, university, allowance } = req.body;
+
+  if (!userId || !allowance || allowance <= 0) {
+    return res.status(400).json({ message: "Invalid signup data" });
   }
 
   users[userId] = {
+    name,
+    university,
     allowance: Number(allowance),
-    spent: 0
+    balance: Number(allowance),
+    spent: 0,
+    points: 0,
+    streak: 0,
+    txs: []
   };
 
-  res.json({
-    message: `Allowance set to ₹${allowance}. You must save at least 60%.`
-  });
+  res.json({ message: "Signup successful", userId });
 });
 
-// Add expense for a user
-app.post("/expense", (req, res) => {
-  const { userId, amount } = req.body;
+/* ---------- TRANSACTIONS ---------- */
 
-  if (!users[userId]) {
-    return res.status(400).json({ message: "User not found" });
+app.post("/api/transaction", (req, res) => {
+  const { userId, type, amount } = req.body;
+  const user = users[userId];
+
+  if (!user || typeof amount !== "number" || amount <= 0) {
+    return res.status(400).json({ message: "Invalid transaction" });
   }
 
-  const user = users[userId];
   const maxSpend = user.allowance * 0.4;
 
-  if (user.spent + amount > maxSpend) {
-    return res.json({
-      allowed: false,
-      message: "❌ Expense denied. Save at least 60% of your allowance."
-    });
+  if (type === "expense") {
+    if (user.spent + amount > maxSpend) {
+      return res.json({
+        allowed: false,
+        message: "❌ Expense denied. You must save at least 60%."
+      });
+    }
+    user.balance -= amount;
+    user.spent += amount;
+    user.points += 10;
   }
 
-  user.spent += Number(amount);
+  if (type === "income") {
+    user.balance += amount;
+    user.points += 5;
+  }
 
   res.json({
     allowed: true,
-    message: `✅ Expense added. Remaining spendable: ₹${maxSpend - user.spent}`
+    balance: user.balance,
+    points: user.points
   });
 });
 
-// Debug route (optional)
-app.get("/users", (req, res) => {
-  res.json(users);
+/* ---------- AI CHAT ---------- */
+
+app.post("/api/ai/motivate", (req, res) => {
+  const { userId, message } = req.body;
+  const user = users[userId];
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  const reply = generateAIReply(user, message);
+
+  res.json({
+    message: reply,
+    points: user.points,
+    streak: user.streak
+  });
 });
 
-app.listen(3000, () => {
-  console.log("Flux backend running on http://localhost:3000");
-});
+/* ---------- SERVER ---------- */
+
+const PORT = 3000;
+app.listen(PORT, () =>
+  console.log(`⚡ Flux backend running on http://localhost:${PORT}`)
+);
