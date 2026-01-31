@@ -469,37 +469,86 @@ function sendChat() {
 
   const chatBox = document.getElementById("chat-content");
 
-  // User message
+  // User bubble
   chatBox.innerHTML += `
-    <div style="align-self:flex-end; background:#6366f1; color:white;
-    padding:10px 14px; border-radius:15px; max-width:70%; margin-bottom:8px;">
+    <div style="
+      align-self:flex-end;
+      background:var(--primary);
+      padding:10px;
+      border-radius:10px;
+      max-width:80%;
+      margin-bottom:10px;
+      color:white;">
       ${msg}
     </div>
   `;
 
   input.value = "";
+  chatBox.scrollTop = chatBox.scrollHeight;
 
-  fetch("http://localhost:3000/api/ai/motivate", {
+  // Typing indicator
+  const typingId = "typing-" + Date.now();
+  chatBox.innerHTML += `
+    <div id="${typingId}" style="
+      background:rgba(255,255,255,0.1);
+      padding:10px;
+      border-radius:10px;
+      align-self:flex-start;
+      max-width:80%;
+      margin-bottom:10px;
+      color:var(--text-main);">
+      AI is thinking...
+    </div>
+  `;
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  fetch(`${BACKEND_URL}/api/ai/motivate`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      userId: "adi",     // demo user
+      userId: "adi",
       message: msg
     })
   })
     .then(res => res.json())
     .then(data => {
+      const typingEl = document.getElementById(typingId);
+      if (typingEl) typingEl.remove();
+
       chatBox.innerHTML += `
-        <div style="align-self:flex-start; background:#1f2937; color:white;
-        padding:10px 14px; border-radius:15px; max-width:70%; margin-bottom:8px;">
+        <div style="
+          background:rgba(255,255,255,0.1);
+          padding:10px;
+          border-radius:10px;
+          align-self:flex-start;
+          max-width:80%;
+          margin-bottom:10px;
+          color:var(--text-main);">
           ${data.message}
         </div>
       `;
       chatBox.scrollTop = chatBox.scrollHeight;
     })
-    .catch(() => {
+    .catch(err => {
+      console.error(err);
+      const typingEl = document.getElementById(typingId);
+      if (typingEl) typingEl.remove();
+
       chatBox.innerHTML += `
         <div style="color:red;">AI unavailable</div>
       `;
     });
 }
+document.addEventListener("DOMContentLoaded", () => {
+  fetch(`${BACKEND_URL}/api/signup`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      userId: "adi",
+      name: "Adi",
+      university: "Flux University",
+      allowance: 10000
+    })
+  }).catch(() => {});
+});
+
