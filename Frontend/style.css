@@ -1,0 +1,63 @@
+:root {
+  --primary: #0F172A;
+  --accent: #2DD4BF;
+  --reward: #FACC15;
+  --bg: #F8FAFC;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--primary);
+}
+
+header {
+  background: var(--primary);
+  color: white;
+  text-align: center;
+  padding: 16px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  background: #020617;
+}
+
+nav button {
+  background: none;
+  color: white;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+}
+
+.container {
+  padding: 16px;
+}
+
+.card {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.hidden {
+  display: none;
+}
+
+.primary {
+  background: var(--accent);
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.points {
+  font-size: 1.5rem;
+  color: var(--reward);
+}

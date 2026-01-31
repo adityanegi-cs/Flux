@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Flux</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>💰 Flux</header>
+
+<nav>
+  <button onclick="show('dashboard')">Dashboard</button>
+  <button onclick="show('expenses')">Expenses</button>
+  <button onclick="show('habits')">Habits</button>
+</nav>
+
+<div class="container">
+
+  <div id="dashboard" class="card">
+    <h2>Dashboard</h2>
+    <p>Allowance (₹):</p>
+    <input type="number" id="allowance" placeholder="Monthly allowance" />
+    <button class="primary" onclick="setAllowance()">Set Allowance</button>
+
+    <p class="points">Points: <span id="points">0</span></p>
+    <p id="status"></p>
+  </div>
+
+  <div id="expenses" class="card hidden">
+    <h2>Add Expense</h2>
+    <input type="number" id="amount" placeholder="Amount" />
+    <button class="primary" onclick="addExpense()">Add</button>
+    <ul id="expenseList"></ul>
+  </div>
+
+  <div id="habits" class="card hidden">
+    <h2>Habits</h2>
+    <label><input type="checkbox" onchange="habit(this)"> Slept early</label><br>
+    <label><input type="checkbox" onchange="habit(this)"> Ate mess food</label>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
