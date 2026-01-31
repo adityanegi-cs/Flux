@@ -37,7 +37,7 @@ v
 
 ---
 
-##  Setup Instructions (Local)
+## Setup Instructions (Local)
 
 Prerequisites
 - Node.js (LTS version)
@@ -45,16 +45,18 @@ Prerequisites
 - Browser (Chrome recommended)
 
  Backend Setup
+ 
 ```bash
 cd backend
 npm install
 node server.js
+```
 Backend will run on:
 http://localhost:3000
 Frontend Setup
 Open frontend/index.html using Live Server in VS Code.
 
- 1) AI Tools Used
+## AI Tools Used
 
 - **ChatGPT** was used for:
   - Problem ideation and refinement
@@ -65,7 +67,7 @@ Open frontend/index.html using Live Server in VS Code.
 
 ---
 
-2) Prompt Strategy Summary
+## Prompt Strategy Summary
 
 We followed an **iterative prompt-driven development approach**:
 
@@ -79,7 +81,7 @@ Prompts were continuously improved to avoid overengineering and maintain simplic
 
 ---
 
-3)  Source Code Structure
+## Source Code Structure
 
 flux/
 ├── frontend/
@@ -91,7 +93,7 @@ flux/
 ├── server.js
 └── package.json
 
-4) Final Output
+## Final Output
 
 - Fully working full-stack web application  
 - Backend-enforced rule: users must save at least **60%** of their allowance  
@@ -100,18 +102,19 @@ flux/
 
 ---
 
-5) Build Reproducibility Instructions (Mandatory)
+## Build Reproducibility Instructions (Mandatory)
 
 Follow these steps to reproduce and run the project from scratch:
 
-a) Clone the repository
+## Clone the repository
 ```bash
 git clone https://github.com/your-username/flux.git
 cd flux
+```
 
- Install backend dependencies
+## Install backend dependencies
 cd backend
 npm install
 
- Start the backend server
+## Start the backend server
 node server.js
