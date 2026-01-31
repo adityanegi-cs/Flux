@@ -102,19 +102,29 @@ flux/
 
 ---
 
-## 9.Build Reproducibility Instructions (Mandatory) :
+## 9.sReproducibility Instructions :
 
 Follow these steps to reproduce and run the project from scratch:
 
-## 10.Clone the repository
+## a. Clone the repository
 ```bash
 git clone https://github.com/your-username/flux.git
 cd flux
 ```
 
-## 11.Install backend dependencies :
+## b. Install backend dependencies :
 cd backend
 npm install
 
-## 12.Start the backend server :
+## c. Start the backend server :
 node server.js
+
+## Backend will run on:
+
+http://localhost:3000
+
+## d. Run the frontend
+
+Open frontend/index.html using Live Server in VS Code.
+
+Ensure the backend is running before interacting with the UI.
