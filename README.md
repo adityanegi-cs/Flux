@@ -6,15 +6,7 @@ College students often struggle with impulsive spending, irregular habits (late 
 **Flux** addresses this problem by enforcing a backend-controlled savings rule and motivating students through habits, points, and gamification.
 
 ## 2.Architecture Diagram :
-[ Frontend (Browser) ]
-|
-| API Requests (fetch)
-v
-[ Backend (Node.js + Express) ]
-|
-| Business Logic (60% savings rule)
-v
-[ In-Memory Data Store ]
+[ Frontend (Browser) ] -> API Requests (fetch) ->[ Backend (Node.js + Express) ] -> Business Logic (60% savings rule) ->[ In-Memory Data Store ]
 
 ---
 
