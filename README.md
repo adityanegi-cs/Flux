@@ -84,6 +84,7 @@ flux/
 └── backend/
 ├── server.js
 └── package.json
+└── package-lock.json
 
 ## 8.Final Output :
 
