@@ -94,7 +94,7 @@ flux/
 
 ---
 
-## 9.sReproducibility Instructions :
+## 9.Reproducibility Instructions :
 
 Follow these steps to reproduce and run the project from scratch:
 
