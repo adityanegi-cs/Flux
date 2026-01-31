@@ -1,11 +1,11 @@
 ## Flux
 Flux is a gamified budgeting and habit-tracking web application designed for college students to help them manage their monthly allowance, build healthy habits, and save money consistently.
 
-## Problem Statement :
+## 1.Problem Statement :
 College students often struggle with impulsive spending, irregular habits (late sleep, outside food, unnecessary expenses), and lack of financial discipline. Existing finance apps are either too complex or not tailored for student life.  
 **Flux** addresses this problem by enforcing a backend-controlled savings rule and motivating students through habits, points, and gamification.
 
-## Architecture Diagram :
+## 2.Architecture Diagram :
 [ Frontend (Browser) ]
 |
 | API Requests (fetch)
@@ -18,7 +18,7 @@ v
 
 ---
 
-## Tech Stack
+## 3.Tech Stack
 
  Frontend
 - HTML
@@ -37,7 +37,7 @@ v
 
 ---
 
-## Setup Instructions (Local)
+## 4.Setup Instructions (Local)
 
 Prerequisites
 - Node.js (LTS version)
@@ -56,7 +56,7 @@ http://localhost:3000
 Frontend Setup
 Open frontend/index.html using Live Server in VS Code.
 
-## AI Tools Used
+## 5.AI Tools Used
 
 - **ChatGPT** was used for:
   - Problem ideation and refinement
@@ -67,7 +67,7 @@ Open frontend/index.html using Live Server in VS Code.
 
 ---
 
-## Prompt Strategy Summary
+## 6.Prompt Strategy Summary
 
 We followed an **iterative prompt-driven development approach**:
 
@@ -81,7 +81,7 @@ Prompts were continuously improved to avoid overengineering and maintain simplic
 
 ---
 
-## Source Code Structure
+## 7.Source Code Structure
 
 flux/
 ├── frontend/
@@ -93,7 +93,7 @@ flux/
 ├── server.js
 └── package.json
 
-## Final Output
+## 8.Final Output
 
 - Fully working full-stack web application  
 - Backend-enforced rule: users must save at least **60%** of their allowance  
@@ -102,19 +102,19 @@ flux/
 
 ---
 
-## Build Reproducibility Instructions (Mandatory)
+## 9.Build Reproducibility Instructions (Mandatory)
 
 Follow these steps to reproduce and run the project from scratch:
 
-## Clone the repository
+## 10.Clone the repository
 ```bash
 git clone https://github.com/your-username/flux.git
 cd flux
 ```
 
-## Install backend dependencies
+## 11.Install backend dependencies
 cd backend
 npm install
 
-## Start the backend server
+## 12.Start the backend server
 node server.js
